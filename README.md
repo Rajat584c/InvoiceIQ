@@ -31,10 +31,10 @@ Indian micro-SMEs process hundreds of invoices monthly but:
 
 | Feature | Tech Used | Status |
 |---|---|---|
-| PDF Invoice OCR & Field Extraction | pdfplumber, pytesseract | ✅ |
-| GST Reconciliation Engine (CGST/SGST/IGST) | Pandas, Regex | 🚧 |
-| Duplicate & Anomaly Detection | Isolation Forest, FuzzyWuzzy | ⏳ |
-| Interactive Dashboard | Streamlit | ⏳ |
+| PDF Invoice OCR & Field Extraction | pdfplumber, pytesseract, fpdf2 | ✅ Week 1 |
+| GST Reconciliation Engine (CGST/SGST/IGST) | Pandas, Regex | 🚧 Week 2 |
+| Duplicate & Anomaly Detection | Isolation Forest, thefuzz | ⏳ Week 3 |
+| Interactive Dashboard | Streamlit | ⏳ Week 4 |
 
 ---
 
@@ -61,6 +61,10 @@ git clone https://github.com/Rajat584c/InvoiceIQ.git
 cd InvoiceIQ
 pip install -r requirements.txt
 streamlit run app.py
+
+# Generate sample invoices + run tests
+python data/generate_sample_invoices.py
+pytest tests/ -v
 ```
 
 ---
@@ -69,18 +73,22 @@ streamlit run app.py
 ```
 InvoiceIQ/
 ├── app/
-│   └── streamlit_app.py       
+│   └── streamlit_app.py            # ⏳ W4: Interactive dashboard (Streamlit)
 ├── engine/
-│   ├── ocr.py                 
-│   ├── gst_reconciler.py      
-│   └── anomaly_detector.py    
+│   ├── __init__.py                 # Makes 'engine' a Python package
+│   ├── ocr.py                      # ✅ W1: PDF/Image → structured DataFrame
+│   ├── gst_reconciler.py           # ⏳ W2: CGST/SGST/IGST validation rules
+│   └── anomaly_detector.py         # ⏳ W3: Isolation Forest + fuzzy matching
 ├── data/
-│   └── generate_sample_invoices.py      
+│   ├── generate_sample_invoices.py # ✅ W1: Synthetic GST invoice generator
+│   └── sample_invoices/            # Generated test PDFs (gitkeep only)
 ├── tests/
-│   └── test_ocr.py
-├── requirements.txt
+│   ├── __init__.py
+│   └── test_ocr.py                 # ✅ W1: 19 unit tests (all passing)
+├── .gitignore
+├── LICENSE                         # MIT
 ├── README.md
-└── .gitignore
+└── requirements.txt
 ```
 ---
 
